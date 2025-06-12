@@ -1,5 +1,3 @@
-import sys
-print(sys.path)
 import tkinter as tk
 from tkinter import messagebox
 from models.teammanager import TeamManager
@@ -7,12 +5,11 @@ from models.teammanager import TeamManager
 class ShowTeams:
     def __init__(self, root):
         self.manager = TeamManager()
-
         root.title("Teams List")
-        root.geometry("300x400")
+        root.geometry("400x500")
 
-        self.listbox = tk.Listbox(root, width=40, height=20)
-        self.listbox.pack(pady=20)
+        self.listbox = tk.Listbox(root, width=50, height=20)
+        self.listbox.pack(pady=10)
 
         tk.Button(root, text="Refresh", command=self.show_teams).pack(pady=5)
         self.show_teams()
@@ -22,11 +19,12 @@ class ShowTeams:
         teams = self.manager.fetch_teams()
 
         if not teams:
-            messagebox.showinfo("Info", "No teams found or failed to load.")
+            messagebox.showinfo("Info", "No teams found or DB connection failed.")
             return
 
-        for team_id, team_name in teams:
-            self.listbox.insert(tk.END, f"{team_name} (ID: {team_id})")
+        for team_name, coach_name, team_country in teams:
+            display_text = f"{team_name} — Coach: {coach_name} — Country: {team_country}"
+            self.listbox.insert(tk.END, display_text)
 
 if __name__ == "__main__":
     root = tk.Tk()
