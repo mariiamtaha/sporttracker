@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from playermanager import PlayerManager
+from models.playermanager import PlayerManager
 
 class ShowPlayersClass:
     def __init__(self, master):

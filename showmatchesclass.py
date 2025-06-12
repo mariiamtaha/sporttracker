@@ -1,9 +1,6 @@
-import tkinter as tk
 from tkinter import ttk
 
-from db_connection import get_connection
-
-from matchmanager import MatchManager  # import your MatchManager here
+from models.matchmanager import MatchManager  # import your MatchManager here
 
 class ShowMatchesClass:
     def __init__(self, master):

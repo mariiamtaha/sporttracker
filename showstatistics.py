@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from matchmanager import MatchManager  # your MatchManager import
+from models.matchmanager import MatchManager  # your MatchManager import
 
 class ShowStatistics:
     def __init__(self, master):
