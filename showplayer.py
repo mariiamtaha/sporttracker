@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from models.playermanager import PlayerManager
 
 class ShowPlayersClass:
@@ -10,11 +10,9 @@ class ShowPlayersClass:
 
         self.player_manager = PlayerManager()
 
-        # Title label
         title = tk.Label(master, text="All Players", font=("Arial", 16))
         title.pack(pady=10)
 
-        # Treeview
         columns = ("ID", "Name", "Team", "Position")
         self.tree = ttk.Treeview(master, columns=columns, show="headings")
         for col in columns:
@@ -22,25 +20,25 @@ class ShowPlayersClass:
             self.tree.column(col, width=150, anchor=tk.CENTER)
         self.tree.pack(fill=tk.BOTH, expand=True)
 
-        # Refresh button
         refresh_btn = tk.Button(master, text="Refresh", command=self.load_players)
         refresh_btn.pack(pady=10)
 
-        # Load data
         self.load_players()
 
     def load_players(self):
-        # Clear old data
         for row in self.tree.get_children():
             self.tree.delete(row)
 
-        # Get from database
         players = self.player_manager.get_all_players()
-        for player in players:
-            self.tree.insert("", tk.END, values=player)
+        if not players:
+            messagebox.showinfo("Info", "No players found or DB connection failed.")
+            return
 
-# Run GUI
+        for player_id, name, team, position in players:
+            self.tree.insert("", tk.END, values=(player_id, name, team, position))
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = ShowPlayersClass(root)
     root.mainloop()
+

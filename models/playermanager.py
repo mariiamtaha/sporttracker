@@ -67,13 +67,18 @@ class PlayerManager:
 
     def get_all_players(self):
         conn = get_connection()
+        if not conn:
+            return []
+
         cursor = conn.cursor()
         try:
-            cursor.execute("SELECT player_id, player_name, team_name, player_position FROM players")
-            results = cursor.fetchall()
-            return results
+            cursor.execute(
+                "SELECT player_id, player_name, team_name, player_position "
+                "FROM players ORDER BY player_name;"
+            )
+            return cursor.fetchall()
         except Exception as e:
-            print("Failed to fetch players:", e)
+            print("DB error in get_all_players:", e)
             return []
         finally:
             cursor.close()
