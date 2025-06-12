@@ -4,7 +4,7 @@ import sqlite3  # or use psycopg2 for PostgreSQL
 
 def get_connection():
     # Replace with your DB connection, this example uses SQLite:
-    return sqlite3.connect("sports.db")
+    return sqlite3.connect("../sports.db")
 
 class ShowCards:
     def __init__(self, root):

@@ -79,14 +79,12 @@ class MatchManager:
             conn = get_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT match_id, team1_name, team2_name, match_date, score_team1, score_team2 FROM matchs")
+                "SELECT match_id, team1_name, team2_name, match_date, score_team1, score_team2 FROM matchs"
+            )
             return cursor.fetchall()
         except Exception as e:
-            print("Database not ready or table missing:", e)
-            # Return mock data temporarily
-            return [
-                (1, "Mock Team 1", "Mock Team 2", "2025-06-10", 1, 1),
-            ]
+            print("DB error in get_all_matches:", e)
+            return []
         finally:
             try:
                 cursor.close()
